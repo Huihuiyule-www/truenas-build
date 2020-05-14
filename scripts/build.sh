@@ -98,6 +98,8 @@ make_bootstrapdir() {
 	mount proc ${CHROOT_BASEDIR}/proc -t proc
 	mount sysfs ${CHROOT_BASEDIR}/sys -t sysfs
 	mount --bind ${CACHE_DIR}/apt ${CHROOT_BASEDIR}/var/cache/apt || exit_err "Failed mount --bind /var/cache/apt"
+	echo "Setting up apt-cacher"
+	echo 'Acquire::http::Proxy "http://192.168.0.5:3142";' > ${CHROOT_BASEDIR}/etc/apt/apt.conf.d/02proxy || exit_err "Failed to setup apt-cacher"
 
 	if [ -z "$CDBUILD" ] ; then
 		# Add extra packages for builds
