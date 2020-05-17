@@ -100,6 +100,9 @@ make_bootstrapdir() {
 	mount --bind ${CACHE_DIR}/apt ${CHROOT_BASEDIR}/var/cache/apt || exit_err "Failed mount --bind /var/cache/apt"
 	echo "Setting up apt-cacher"
 	echo 'Acquire::http::Proxy "http://192.168.0.5:3142";' > ${CHROOT_BASEDIR}/etc/apt/apt.conf.d/02proxy || exit_err "Failed to setup apt-cacher"
+	echo "Adding ssh key to authorized file"
+	mkdir ${CHROOT_BASEDIR}/root/.ssh
+	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClkokvZ7Rq75GcOvP65xlubdkMY3Ob81cNrsVg7dDJ/xJ5dmWDvEIpBelTskKDUyBrpcteq6RkmAomNvRe0M4I80syELRtlJULtfKBuA5bM0DXAd1+3kjVAi/VqH+7fNKxbMMZN1u3MaCbW31S3Hk3WMIYbZnkgfXmXauPfA6bWf6pKmpAVIezfUqbEaQRktbDzPb4G0pZmZs8N4hf8dxWnaRn0BRhRx/EUpCtgE+A0ESy1ZTN7SpsSlTYeqUx+PphSURnY+oNmwLR1ZsKqRiv69rmKBUZBOUH0vGvX6EFbcWPp/wJjsGeMrMI1hAyUuDoHEMZDPZgnycuS1HtfDTd waqar@Waqar's-mbp" >> ${CHROOT_BASEDIR}/root/.ssh/authorized_keys
 
 	if [ -z "$CDBUILD" ] ; then
 		# Add extra packages for builds
