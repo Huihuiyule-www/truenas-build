@@ -551,10 +551,11 @@ checkout_git_repo() {
 
 	# Cleanup old dir, if it exists
 	if [ -d "${SOURCES}/${NAME}" ] ; then
-		rm -r ${SOURCES}/${NAME}
+		git -C ${SOURCES}/${NAME} checkout ${GHBRANCH} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed to checkout branch ${GHBRANCH}"
+	else
+		git clone ${REPO} ${SOURCES}/${NAME} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed checkout of ${REPO}"
+		git -C ${SOURCES}/${NAME} checkout ${GHBRANCH} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed to checkout branch ${GHBRANCH}"
 	fi
-	git clone --depth=1 -b ${GHBRANCH} ${REPO} ${SOURCES}/${NAME} \
-		>${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed checkout of ${REPO}"
 }
 
 install_iso_packages() {
