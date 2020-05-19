@@ -518,7 +518,7 @@ checkout_sources() {
 
 		# Check if we can do a git pull, or need to checkout fresh
 		if [ -d ${SOURCES}/${NAME} ] ; then
-			cbranch=$(cd ${SOURCES}/${NAME} && git branch | awk '{print $2}')
+			cbranch=$(cd ${SOURCES}/${NAME} && git branch | awk '{print $2}' | xargs)
 			if [ "$cbranch" != "$GHBRANCH" ] ; then
 				# Branch name changed in manifest
 				checkout_git_repo "${NAME}" "${GHBRANCH}" "${REPO}"
@@ -538,7 +538,6 @@ update_git_repo() {
 	GHBRANCH="$2"
 	REPO="$3"
 	echo "`date`: Updating git repo [${NAME}] (${LOG_DIR}/git-checkout.log)"
-	(cd ${SOURCES}/${NAME} && git fetch --unshallow) >${LOG_DIR}/git-checkout.log 2>&1
 	(cd ${SOURCES}/${NAME} && git fetch origin ${GHBRANCH}) >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed git fetch"
 	(cd ${SOURCES}/${NAME} && git reset --hard origin/${GHBRANCH}) >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed git reset"
 }
@@ -549,9 +548,10 @@ checkout_git_repo() {
 	REPO="$3"
 	echo "`date`: Checking out git repo [${NAME}] (${LOG_DIR}/git-checkout.log)"
 
-	# Cleanup old dir, if it exists
+	# Checkout branch and update the branch if repo exists
 	if [ -d "${SOURCES}/${NAME}" ] ; then
 		git -C ${SOURCES}/${NAME} checkout ${GHBRANCH} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed to checkout branch ${GHBRANCH}"
+		update_git_repo "${NAME}" "${GHBRANCH}" "${REPO}"
 	else
 		git clone ${REPO} ${SOURCES}/${NAME} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed checkout of ${REPO}"
 		git -C ${SOURCES}/${NAME} checkout ${GHBRANCH} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed to checkout branch ${GHBRANCH}"
