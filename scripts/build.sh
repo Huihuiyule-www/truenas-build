@@ -550,6 +550,7 @@ checkout_git_repo() {
 
 	# Checkout branch and update the branch if repo exists
 	if [ -d "${SOURCES}/${NAME}" ] ; then
+		git -C ${SOURCES}/${NAME} fetch origin || exit_err "Failed to git fetch origin"
 		git -C ${SOURCES}/${NAME} checkout ${GHBRANCH} >${LOG_DIR}/git-checkout.log 2>&1 || exit_err "Failed to checkout branch ${GHBRANCH}"
 		update_git_repo "${NAME}" "${GHBRANCH}" "${REPO}"
 	else
