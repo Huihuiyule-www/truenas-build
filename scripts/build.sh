@@ -99,12 +99,12 @@ make_bootstrapdir() {
 	mount sysfs ${CHROOT_BASEDIR}/sys -t sysfs
 	mount --bind ${CACHE_DIR}/apt ${CHROOT_BASEDIR}/var/cache/apt || exit_err "Failed mount --bind /var/cache/apt"
 	echo "Setting up apt-cacher"
-	echo 'Acquire::http::Proxy "http://192.168.0.5:3142";' > ${CHROOT_BASEDIR}/etc/apt/apt.conf.d/02proxy || exit_err "Failed to setup apt-cacher"
+	echo 'Acquire::http::Proxy "http://192.168.0.3:3142";' > ${CHROOT_BASEDIR}/etc/apt/apt.conf.d/02proxy || exit_err "Failed to setup apt-cacher"
 	echo "Adding ssh key to authorized file"
 	mkdir ${CHROOT_BASEDIR}/root/.ssh
 	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClkokvZ7Rq75GcOvP65xlubdkMY3Ob81cNrsVg7dDJ/xJ5dmWDvEIpBelTskKDUyBrpcteq6RkmAomNvRe0M4I80syELRtlJULtfKBuA5bM0DXAd1+3kjVAi/VqH+7fNKxbMMZN1u3MaCbW31S3Hk3WMIYbZnkgfXmXauPfA6bWf6pKmpAVIezfUqbEaQRktbDzPb4G0pZmZs8N4hf8dxWnaRn0BRhRx/EUpCtgE+A0ESy1ZTN7SpsSlTYeqUx+PphSURnY+oNmwLR1ZsKqRiv69rmKBUZBOUH0vGvX6EFbcWPp/wJjsGeMrMI1hAyUuDoHEMZDPZgnycuS1HtfDTd waqar@Waqar's-mbp" >> ${CHROOT_BASEDIR}/root/.ssh/authorized_keys
 
-	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDTTz1gTIUhoaUQ/4u9IAPbdNYofO9cvRCiqUu/2I19utkTu7y4wj8rcmgBZTnffVyvbsetTgH7aBe7QcwqkayaSSNVU8cCWi9KPwnYqXlp7Ox7zwj6VA7It6NjSunA0IRkxZe9tNYaU087ENCZPsJ4kjuTQ6sfs0Jv4+uoKAUqgF0fMXiAl2G8XCMIzM3JBV02sY4lh7eq2UmaLCadpTp3EsQKAWcRGlvV0Ws7UpeLQT4hFAMC0zJdNAl2UVtxp+kvc05yPgAxFmW7udxM+KXUnyN3Q+3d6g24+fYM3YCDHUQlPsOmoJa0SN3cWxAR/NuSbM0eBy4yvnxCrL5+UNmZUpEiETeGCKPmYQnrwapfdsQPUbGBSc048nP+JvG/TwEACf277CAO3/UV9VJe0r64ltzxD0U8sy5oRtcz1xy0BjDr321MnXEvil3vj391WXygxlm/j+eF7guB+nmRQGiVudMU5sRXlmlLwp37UN2VhF47jBU6L4zOnomQQIDg8Oc= root@waqar-ubuntu20" >> ${CHROOT_BASEDIR}/root/.ssh/authorized_keys
+	echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCrzF/xK6YVa0EEa9NFfJIHQyUq2VWSakHdQmvHyKiMxRm5MQ+2I/XdBw+QRAPEUThcCCC/1+Xb4YBHKWF1yIKMlvim2r1cuJgN+LlIJro9H/DjLcSCqZwp8WoDte7zEIpI36u2YNErH/bXDV3pMW/etXtL4KtLLUcHY8FjNzDXlsQZjVNiKMQk9c9tX8LmegOyLqa4j3Eyk30EqqZrKSthVs3NOuX+yVWeYmYW7srjnbMP+Iz3qkP0b3bTlomtQTZNME4bXmRti00u/bhq7YWR+G/2IcWHpVoAI3mUU2cR8u+WpNrYHJ1ocLogOKeVqYcxjr4zx96ADrC+kMwQwdPzF3fNdV1j99O7b+rmuRyBTTzWRepLuqlQAecY8+XB+OGpetk1VNuNocUzdwQZe1kPrmMsX5Kb29PjaA9V+lhpOdh0qce3YfhxrGh2+rNbpukIk6gZ6nU8TxfCO/j8mBFd4rF9xS+cYMuB/HUcpiAsea0PNXPnm9hUGH+i3SAbXM0= root@truenas.local" >> ${CHROOT_BASEDIR}/root/.ssh/authorized_keys
 
 	if [ -z "$CDBUILD" ] ; then
 		# Add extra packages for builds

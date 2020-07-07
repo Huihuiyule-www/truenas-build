@@ -61,6 +61,7 @@
 		"htop",
 		"ifstat",
 		"nvidia-kernel-450.66",
+		"apt-cacher-ng",
 		"nvidia-container-toolkit",
 		"nvidia-smi",
 		"libnvidia-encode1",
@@ -70,6 +71,14 @@
 		"truenas",
 		"wireguard",
 		"zfs-test",
+		"build-essential",
+		"debootstrap",
+		"xorriso",
+		"grub-common",
+		"grub-efi-amd64-bin",
+		"grub-pc-bin mtools",
+		"squashfs-tools",
+		"unzip",
 		"zfs-initramfs"
 	],
 	"base-prune": [
