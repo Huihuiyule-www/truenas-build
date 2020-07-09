@@ -577,6 +577,8 @@ install_iso_packages() {
 
 	#chroot ${CHROOT_BASEDIR} /bin/bash
 	mkdir -p ${CHROOT_BASEDIR}/boot/grub
+	mkdir -p /etc/apt-cacher-ng
+	cp conf/acng.conf ${CHROOT_BASEDIR}/etc/apt-cacher-ng/acng.conf
 	cp scripts/grub.cfg ${CHROOT_BASEDIR}/boot/grub/grub.cfg || exit_err "Failed copying grub.cfg"
 	umount -f ${CHROOT_BASEDIR}/packages
 	umount -f ${CHROOT_BASEDIR}/proc
