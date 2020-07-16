@@ -578,7 +578,6 @@ install_iso_packages() {
 	#chroot ${CHROOT_BASEDIR} /bin/bash
 	mkdir -p ${CHROOT_BASEDIR}/boot/grub
 	mkdir -p /etc/apt-cacher-ng
-	cp conf/acng.conf ${CHROOT_BASEDIR}/etc/apt-cacher-ng/acng.conf
 	cp scripts/grub.cfg ${CHROOT_BASEDIR}/boot/grub/grub.cfg || exit_err "Failed copying grub.cfg"
 	umount -f ${CHROOT_BASEDIR}/packages
 	umount -f ${CHROOT_BASEDIR}/proc
@@ -671,6 +670,14 @@ install_rootfs_packages() {
 
 	# Copy the default sources.list file
 	cp conf/sources.list ${CHROOT_BASEDIR}/etc/apt/sources.list || exit_err "Failed installing sources.list"
+
+	# Copy acng conf
+	mkdir -p ${CHROOT_BASEDIR}/etc/apt-cacher-ng/
+	cp conf/acng.conf ${CHROOT_BASEDIR}/etc/apt-cacher-ng/ || exit_err "Failed copying acng conf"
+
+	# Copy locale gen
+	cp conf/locale.gen ${CHROOT_BASEDIR}/etc/ || exit_err "Failed copying locale.gen"
+	chroot ${CHROOT_BASEDIR} locale-gen || exit_err "Failed genearting locale-gen"
 
 	#chroot ${CHROOT_BASEDIR} /bin/bash
 	umount -f ${CHROOT_BASEDIR}/packages

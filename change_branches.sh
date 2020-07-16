@@ -1,7 +1,7 @@
 #!/bin/sh
 
 
-branch="NAS-104341"
+branch="master"
 cd /mnt/evo/build
 
 for i in "truenas" "truenas_files" "middlewared"; do
