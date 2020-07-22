@@ -679,6 +679,10 @@ install_rootfs_packages() {
 	cp conf/locale.gen ${CHROOT_BASEDIR}/etc/ || exit_err "Failed copying locale.gen"
 	chroot ${CHROOT_BASEDIR} locale-gen || exit_err "Failed genearting locale-gen"
 
+  # Copy root directory contents
+  cp -a conf/root/* ${CHROOT_BASEDIR}/root/ || exit_err "Failed copying root directory contents"
+
+
 	#chroot ${CHROOT_BASEDIR} /bin/bash
 	umount -f ${CHROOT_BASEDIR}/packages
 	rmdir ${CHROOT_BASEDIR}/packages
