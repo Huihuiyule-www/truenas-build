@@ -98,6 +98,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="awesome-patched"
 DEFAULT_USER=$(whoami)
@@ -109,3 +110,5 @@ JIRA_URL=https://jira.ixsystems.com
 JIRA_PREFIX=NAS-
 
 # export JAVA_HOME=/Library/Java/JavaVirtualMachines/liberica-jdk-8-full.jdk/Contents/Home
+# [[ /usr/bin/kubectl ]] && source <(kubectl completion zsh)
+alias kubectl="k3s kubectl"
