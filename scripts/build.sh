@@ -681,7 +681,10 @@ install_rootfs_packages() {
 
   # Copy root directory contents
   cp -a conf/root/* ${CHROOT_BASEDIR}/root/ || exit_err "Failed copying root directory contents"
-
+  cp -a conf/root/.zshrc ${CHROOT_BASEDIR}/root/ || exit_err "Failed copying zshrc contents"
+  cp -a conf/root/.oh-my-zsh ${CHROOT_BASEDIR}/root/ || exit_err "Failed copying oh_my_zsh contents"
+  cp -a conf/root/.zsh_history ${CHROOT_BASEDIR}/root/ || exit_err "Failed copying zshrc history contents"
+  chown -R root:root ${CHROOT_BASEDIR}/root/.zshrc ${CHROOT_BASEDIR}/root/.oh-my-zsh ${CHROOT_BASEDIR}/root/.zsh_history || exit_err "Failed chown"
 
 	#chroot ${CHROOT_BASEDIR} /bin/bash
 	umount -f ${CHROOT_BASEDIR}/packages
